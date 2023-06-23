@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Header Section -->
     <header class="header">
         <div class="header__logo">
             <img class="logo__image" src="images/arkenslogo.png" alt="Logo">
@@ -26,6 +27,7 @@
         </div>
     </header>
 
+    <!-- Main Section -->
     <div class="main">
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
@@ -34,9 +36,51 @@
         <div class="tradingview-widget-container">
             <div class="tradingview-widget" id="tradingview_widget"></div>
         </div>
-        <div id="trading-pair-list"></div>
+        <div class="trading-pair-container">
+            <table id="trading-pair-list">
+                <thead>
+                    <tr>
+                        <th>Trading Pairs</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="container">
+            <div class="order-book-container">
+                <table id="order-book">
+                    <thead>
+                        <tr>
+                            <th>Bids</th>
+                            <th>Asks</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="no-orders-box">No active orders</div>
+        </div>
     </div>
+    <div class="order-section">
+        <h2>Place Order</h2>
+        <div class="order-form">
+          <label for="order-type">Order Type:</label>
+          <select id="order-type">
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+          </select>
+          <label for="order-price">Price:</label>
+          <input type="text" id="order-price" placeholder="Enter price">
+          <label for="order-amount">Amount:</label>
+          <input type="text" id="order-amount" placeholder="Enter amount">
+          <label for="order-total">Total Value:</label>
+          <input type="text" id="order-total" placeholder="Enter total value">
+          <button id="place-order-btn">Place Order</button>
+        </div>
+    </div>
+      
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/trading-pair-list.js"></script>
 </body>

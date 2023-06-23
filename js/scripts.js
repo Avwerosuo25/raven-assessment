@@ -14,47 +14,82 @@ new TradingView.widget({
   "container_id": "tradingview_1bf9d"
 });
 
-// Make an HTTP request to the Binance API endpoint
-fetch('https://api.binance.com/api/v3/exchangeInfo')
-    .then(response => response.json())
-    .then(data => {
+$(function () {
+    var burl = "https://api.binance.com";
+    var query = '/api/v3/exchangeInfo';
+    var url = burl + query;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
         // Extract the symbols array from the API response
         const symbols = data.symbols;
-
-        // Define the desired currency pairs
-        const desiredCurrencyPairs = ["BTCUSDT", "ETHBTC", "LTCUSDT", "EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD", "USDCHF"]; // Add 7 more currency pairs here
-
-        // Filter the symbols array to include only the desired currency pairs
-        const filteredSymbols = symbols.filter(symbol => desiredCurrencyPairs.includes(symbol.symbol));
-
-        // Create a table for trading pairs
-        const tradingPairList = document.getElementById('trading-pair-list');
+  
+        // Define the number of trading pairs to display
+        const numPairs = 10;
+  
+        // Get the first 'numPairs' symbols
+        const selectedSymbols = symbols.slice(0, numPairs);
+  
+        // Create a table with trading pairs
         const table = document.createElement('table');
-        table.classList.add('trading-pair-table');
-
-        // Create table headers
-        const tableHead = document.createElement('thead');
-        const headerRow = document.createElement('tr');
-        const headerTradingPairs = document.createElement('th');
-        headerTradingPairs.textContent = 'Trading Pairs'; // Update the header text
-        headerRow.appendChild(headerTradingPairs);
-        tableHead.appendChild(headerRow);
-        table.appendChild(tableHead);
-
-        // Create table rows for each trading pair
-        const tableBody = document.createElement('tbody');
-        filteredSymbols.forEach(symbol => {
-            const row = document.createElement('tr');
-            const symbolCell = document.createElement('td');
-            symbolCell.textContent = symbol.baseAsset + "/" + symbol.quoteAsset; // Display the base asset and quote asset as the trading pair
-            row.appendChild(symbolCell);
-            tableBody.appendChild(row);
+  
+        // Create the table header
+        const thead = document.createElement('thead');
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        th.textContent = 'Trading Pairs';
+        tr.appendChild(th);
+        thead.appendChild(tr);
+        table.appendChild(thead);
+  
+        // Create the table body with trading pairs
+        const tbody = document.createElement('tbody');
+        selectedSymbols.forEach(symbol => {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.textContent = symbol.symbol;
+          tr.appendChild(td);
+          tbody.appendChild(tr);
         });
-        table.appendChild(tableBody);
-
+        table.appendChild(tbody);
+  
+        // Clear the existing trading pair list
+        const tradingPairList = document.getElementById('trading-pair-list');
+        tradingPairList.innerHTML = '';
+  
         // Append the table to the trading-pair-list div
         tradingPairList.appendChild(table);
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error fetching trading pair list:', error);
-    });
+      });
+  });
+  
+  $(function () {
+    var book = "https://api.binance.com";
+    var quest = '/api/v3/depth';
+    quest += '?symbol=BTCUSDT&limit=5'; // Specify the symbol and limit
+    var url = book + quest;
+    var ourRequest = new XMLHttpRequest();
+    ourRequest.open('GET', url, true);
+    ourRequest.onload = function() {
+        if (ourRequest.status === 200) {
+            var data = JSON.parse(ourRequest.responseText);
+            var tradingPairs = data.bids.concat(data.asks);
+            var tableBody = document.querySelector("#order-book tbody");
+            tableBody.innerHTML = ""; // Clear the table body before populating new data
+            tradingPairs.forEach(function(pair) {
+                var row = document.createElement("tr");
+                var bidCell = document.createElement("td");
+                bidCell.textContent = pair[0];
+                var askCell = document.createElement("td");
+                askCell.textContent = pair[1];
+                row.appendChild(bidCell);
+                row.appendChild(askCell);
+                tableBody.appendChild(row);
+            });
+        }
+    };
+    ourRequest.send();
+});
