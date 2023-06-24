@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trading website</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
     <!-- Header Section -->
@@ -78,10 +80,45 @@
           <button id="place-order-btn">Place Order</button>
         </div>
     </div>
+
+    <footer>
+        <div class="container">
+          <div class="footer-content">
+            <div class="quick-links">
+              <a href="contact.html">Contact</a>
+              <a href="#">Home</a>
+              <a href="#">About</a>
+              <a href="#">Services</a>
+            </div>          
+          </div>
+          <div class="social-media-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="auth-screen">
+            <h2>Authentication</h2>
+            <form id="auth-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="gravatar"></div>
+            <div id="github-repos"></div>
+        </div>
+          <p class="footer-copyright">
+            &copy; 2023 Your Company. All rights reserved.
+          </p>
+        </div>
+      </footer>
       
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/trading-pair-list.js"></script>
+
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://s3.tradingview.com/tv.js"></script>
+      <script src="js/scripts.js"></script>
+      <script src="js/trading-pair-list.js"></script>
+      
 </body>
 </html>
