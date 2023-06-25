@@ -1,3 +1,0 @@
-step one: Create the financial candlestick
-step two: Create the currency pairs
-step three: Create the Order Book
